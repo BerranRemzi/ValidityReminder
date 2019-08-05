@@ -129,6 +129,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="test.xls" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="excel_icon.ico" />

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{58F37257-3512-4472-8B7E-B8052CBEC1D4}</ProjectGuid>
+    <ProjectGuid>{CEC35D9C-2D61-431D-BBAB-4E0A721AF0D1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ExcelToDataTable</RootNamespace>

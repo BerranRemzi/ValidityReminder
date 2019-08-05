@@ -21,6 +21,7 @@ namespace Validity_Reminder
         public Password()
         {
             InitializeComponent();
+            XML.Reload();
         }
 
         void ReturnValues()

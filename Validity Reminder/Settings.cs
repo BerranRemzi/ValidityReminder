@@ -15,6 +15,7 @@ namespace Validity_Reminder
         public Settings()
         {
             InitializeComponent();
+            XML.Reload();
             Init();
         }
 
@@ -39,7 +40,7 @@ namespace Validity_Reminder
                 CheckPathExists = true,
 
                 DefaultExt = "xls",
-                Filter = "XLS files (*.xls)|*.xls",
+                Filter = "XLS files (*.xls,*.xlsx)|*.xls;*.xlsx",
                 FilterIndex = 2,
                 RestoreDirectory = true,
 
@@ -57,6 +58,17 @@ namespace Validity_Reminder
         {
             XML.ToExpiration = int.Parse(txtDays.Text);
             XML.FileName = txtFileName.Text;
+
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        private void txtDays_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+            {
+                BtnSaveAndExit_Click(sender, null);
+            }
         }
     }
 }

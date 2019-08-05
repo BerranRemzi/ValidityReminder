@@ -62,22 +62,24 @@ namespace ExcelDataTableLibrary
             DataTable dtAll = new DataTable();
 
             string[] sheetNames = GetSheetNames(_fileName);
-
-            foreach (string name in sheetNames)
+            if (sheetNames != null)
             {
-                using (DataTable dtTemp = GetDataTable(_fileName, name))
+                foreach (string name in sheetNames)
                 {
-                    if (dtTemp != null)
+                    using (DataTable dtTemp = GetDataTable(_fileName, name))
                     {
-                        try
+                        if (dtTemp != null)
                         {
-                            dtAll.Merge(dtTemp, false, MissingSchemaAction.Add);
+                            try
+                            {
+                                dtAll.Merge(dtTemp, false, MissingSchemaAction.Add);
 
-                        }
-                        catch (Exception)
-                        {
-                            MessageBox.Show("Please correct all values on sheet : " + name, "Value Type Mismatch Error",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            catch (Exception)
+                            {
+                                MessageBox.Show("Please correct all values on sheet : " + name, "Value Type Mismatch Error",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
                         }
                     }
                 }
@@ -178,6 +180,7 @@ namespace ExcelDataTableLibrary
                     {
                         int[] inputNumber = new int[2];
 
+                        DateTime dt;
                         if (int.TryParse(dr[calculationRowCaption[i, 0]].ToString(), out inputNumber[0])
                             && int.TryParse(dr[calculationRowCaption[i, 1]].ToString(), out inputNumber[1]))
                         {
@@ -199,7 +202,7 @@ namespace ExcelDataTableLibrary
                                 default: break;
                             }
                         }
-                        else if (DateTime.TryParse(dr[calculationRowCaption[i, 0]].ToString(), out DateTime dt) && DateTime.TryParse(dr[calculationRowCaption[i, 1]].ToString(), out dt))
+                        else if (DateTime.TryParse(dr[calculationRowCaption[i, 0]].ToString(), out dt) && DateTime.TryParse(dr[calculationRowCaption[i, 1]].ToString(), out dt))
                         {
                             DateTime[] inputTime = new DateTime[2];
                             inputTime[0] = (DateTime)dr[calculationRowCaption[i, 0]];
@@ -232,8 +235,9 @@ namespace ExcelDataTableLibrary
                     foreach (DataRow dr in _inputDataTable.Rows) // search whole table
                     {
                         int[] inputNumber = new int[2];
+                        DateTime dt;
 
-                        if (DateTime.TryParse(dr[calculationRowCaption[i, 0]].ToString(), out DateTime dt))
+                        if (DateTime.TryParse(dr[calculationRowCaption[i, 0]].ToString(), out dt))
                         {
                             DateTime[] inputTime = new DateTime[2];
                             inputTime[0] = (DateTime)dr[calculationRowCaption[i, 0]];
@@ -287,7 +291,7 @@ namespace ExcelDataTableLibrary
                 foreach (DataRow row in dt.Rows)
                 {
                     excelSheets[i] = row["TABLE_NAME"].ToString();
-
+                    //excelSheets[i].Replace("#", ".");
                     i++;
                 }
 
@@ -381,9 +385,9 @@ namespace ExcelDataTableLibrary
             {
                 foreach (DataGridViewRow row in _input.Rows)
                 {
-
+                    int value;
                     if (row.Cells[_inputColumnName].Value != null
-                        && int.TryParse(row.Cells[_inputColumnName].Value.ToString(), out int value) == true)
+                        && int.TryParse(row.Cells[_inputColumnName].Value.ToString(), out value) == true)
                     {
                         Color newColor = row.Cells[_inputColumnName].Style.BackColor;
                         switch (_inputFunction)

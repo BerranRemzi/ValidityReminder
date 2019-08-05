@@ -6,18 +6,34 @@ namespace ConfigFileLibrary
     public class ConfigFile
     {
 
-        string[] sheetNames = { "Sheet1", "Sheet2" };
-        string fileName = ConfigurationManager.AppSettings["fileName"];
-        string firstNotification = ConfigurationManager.AppSettings["firstNotification"];
-        int toExpiration = Convert.ToInt16(ConfigurationManager.AppSettings["toExpiration"]);
-        string passwordHash = ConfigurationManager.AppSettings["password"];
-        int lastSnoozeIndex = Convert.ToInt16(ConfigurationManager.AppSettings["lastSnoozeIndex"]);
+        string fileName;
+        string firstNotification;
+        int toExpiration;
+        string passwordHash;
+        int lastSnoozeIndex;
         int[] snoozeValues = Array.ConvertAll(ConfigurationManager.AppSettings["snoozeValues"].Split(';'), int.Parse);
         string[] snoozeTexts = ConfigurationManager.AppSettings["snoozeTexts"].Split(new string[] { ";" }, StringSplitOptions.None);
         int filterIndex = Convert.ToInt16(ConfigurationManager.AppSettings["filterIndex"]);
+        string sheetCaption = ConfigurationManager.AppSettings["sheetCaption"];
+        string[] yellowSheets;
+        string[] columnSource = ConfigurationManager.AppSettings["columnSource"].Split(new string[] { ";" }, StringSplitOptions.None);
+        string[] columnCalculation = ConfigurationManager.AppSettings["columnCalculation"].Split(new string[] { ";" }, StringSplitOptions.None);
 
-
-
+        public void Reload()
+        {
+            fileName = ConfigurationManager.AppSettings["fileName"];
+            firstNotification = ConfigurationManager.AppSettings["firstNotification"];
+            toExpiration = Convert.ToInt16(ConfigurationManager.AppSettings["toExpiration"]);
+            passwordHash = ConfigurationManager.AppSettings["password"];
+            lastSnoozeIndex = Convert.ToInt16(ConfigurationManager.AppSettings["lastSnoozeIndex"]);
+            snoozeValues = Array.ConvertAll(ConfigurationManager.AppSettings["snoozeValues"].Split(';'), int.Parse);
+            snoozeTexts = ConfigurationManager.AppSettings["snoozeTexts"].Split(new string[] { ";" }, StringSplitOptions.None);
+            filterIndex = Convert.ToInt16(ConfigurationManager.AppSettings["filterIndex"]);
+            sheetCaption = ConfigurationManager.AppSettings["sheetCaption"];
+            columnSource = ConfigurationManager.AppSettings["columnSource"].Split(new string[] { ";" }, StringSplitOptions.None);
+            columnCalculation = ConfigurationManager.AppSettings["columnCalculation"].Split(new string[] { ";" }, StringSplitOptions.None);
+            yellowSheets = ConfigurationManager.AppSettings["yellowSheets"].Split(new string[] { ";" }, StringSplitOptions.None);
+        }
         private static void SetSetting(string key, string value)
         {
             Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
@@ -28,18 +44,6 @@ namespace ConfigFileLibrary
         private static void SetSetting(string key, int value)
         {
             SetSetting(key, value.ToString());
-        }
-        public string[] SheetNames
-        {
-            get
-            {
-                return sheetNames;
-            }
-
-            set
-            {
-                sheetNames = value;
-            }
         }
 
         public string FileName
@@ -55,7 +59,6 @@ namespace ConfigFileLibrary
                 fileName = value;
             }
         }
-
         public string FirstNotification
         {
             get
@@ -68,7 +71,6 @@ namespace ConfigFileLibrary
                 firstNotification = value;
             }
         }
-
         public int ToExpiration
         {
             get
@@ -142,6 +144,56 @@ namespace ConfigFileLibrary
             {
                 SetSetting("filterIndex", value);
                 filterIndex = value;
+            }
+        }
+        public string SheetCaption
+        {
+            get
+            {
+                return sheetCaption;
+            }
+
+            set
+            {
+                sheetCaption = value;
+            }
+        }
+        public string[] YellowSheets
+        {
+            get
+            {
+                return yellowSheets;
+            }
+
+            set
+            {
+                yellowSheets = value;
+            }
+        }
+
+        public string[] ColumnSource
+        {
+            get
+            {
+                return columnSource;
+            }
+
+            set
+            {
+                columnSource = value;
+            }
+        }
+
+        public string[] ColumnCalculation
+        {
+            get
+            {
+                return columnCalculation;
+            }
+
+            set
+            {
+                columnCalculation = value;
             }
         }
 

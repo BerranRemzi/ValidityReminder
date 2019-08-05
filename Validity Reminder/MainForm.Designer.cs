@@ -40,9 +40,10 @@
             this.notifyIconReminder = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuReminder = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reminderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.reminderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.timerFirstStart = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExcel)).BeginInit();
             this.contextMenuReminder.SuspendLayout();
             this.SuspendLayout();
@@ -100,12 +101,18 @@
             this.dataGridViewExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridViewExcel.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridViewExcel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewExcel.Location = new System.Drawing.Point(12, 41);
             this.dataGridViewExcel.Name = "dataGridViewExcel";
+            this.dataGridViewExcel.ReadOnly = true;
             this.dataGridViewExcel.Size = new System.Drawing.Size(703, 388);
             this.dataGridViewExcel.TabIndex = 5;
             this.dataGridViewExcel.Sorted += new System.EventHandler(this.DataGridViewExcel_Sorted);
+            // 
+            // timerReminder
+            // 
+            this.timerReminder.Tick += new System.EventHandler(this.timerReminder_Tick);
             // 
             // notifyIconReminder
             // 
@@ -131,26 +138,31 @@
             // showStripMenuItem
             // 
             this.showStripMenuItem.Name = "showStripMenuItem";
-            this.showStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.showStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.showStripMenuItem.Text = "Show";
+            // 
+            // reminderToolStripMenuItem
+            // 
+            this.reminderToolStripMenuItem.Name = "reminderToolStripMenuItem";
+            this.reminderToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.reminderToolStripMenuItem.Text = "Reminder";
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
             // 
             // exitStripMenuItem
             // 
             this.exitStripMenuItem.Name = "exitStripMenuItem";
-            this.exitStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.exitStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.exitStripMenuItem.Text = "Exit";
             // 
-            // reminderToolStripMenuItem
+            // timerFirstStart
             // 
-            this.reminderToolStripMenuItem.Name = "reminderToolStripMenuItem";
-            this.reminderToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.reminderToolStripMenuItem.Text = "Reminder";
+            this.timerFirstStart.Enabled = true;
+            this.timerFirstStart.Tick += new System.EventHandler(this.timerFirstStart_Tick);
             // 
             // MainForm
             // 
@@ -190,6 +202,7 @@
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reminderToolStripMenuItem;
+        private System.Windows.Forms.Timer timerFirstStart;
     }
 }
 

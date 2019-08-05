@@ -98,6 +98,7 @@
             this.txtDays.Name = "txtDays";
             this.txtDays.Size = new System.Drawing.Size(46, 20);
             this.txtDays.TabIndex = 6;
+            this.txtDays.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDays_KeyPress);
             // 
             // Settings
             // 

@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lblExpiration = new System.Windows.Forms.Label();
             this.dataGridViewExcel = new System.Windows.Forms.DataGridView();
             this.btnSnooze = new System.Windows.Forms.Button();
             this.listSnooze = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.timerReminder = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExcel)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,13 +56,13 @@
             this.dataGridViewExcel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewExcel.Location = new System.Drawing.Point(12, 41);
             this.dataGridViewExcel.Name = "dataGridViewExcel";
-            this.dataGridViewExcel.Size = new System.Drawing.Size(665, 208);
+            this.dataGridViewExcel.Size = new System.Drawing.Size(768, 438);
             this.dataGridViewExcel.TabIndex = 1;
             // 
             // btnSnooze
             // 
             this.btnSnooze.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSnooze.Location = new System.Drawing.Point(603, 12);
+            this.btnSnooze.Location = new System.Drawing.Point(706, 12);
             this.btnSnooze.Name = "btnSnooze";
             this.btnSnooze.Size = new System.Drawing.Size(75, 23);
             this.btnSnooze.TabIndex = 3;
@@ -73,7 +75,7 @@
             this.listSnooze.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.listSnooze.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.listSnooze.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.listSnooze.Location = new System.Drawing.Point(540, 14);
+            this.listSnooze.Location = new System.Drawing.Point(643, 14);
             this.listSnooze.Name = "listSnooze";
             this.listSnooze.Size = new System.Drawing.Size(57, 21);
             this.listSnooze.TabIndex = 4;
@@ -83,18 +85,22 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(476, 17);
+            this.label2.Location = new System.Drawing.Point(579, 17);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(58, 13);
             this.label2.TabIndex = 5;
             this.label2.Text = "Snooze for";
+            // 
+            // timerReminder
+            // 
+            this.timerReminder.Tick += new System.EventHandler(this.TimerReminder_Tick);
             // 
             // Notification
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
-            this.ClientSize = new System.Drawing.Size(690, 261);
+            this.ClientSize = new System.Drawing.Size(793, 491);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.listSnooze);
             this.Controls.Add(this.btnSnooze);
@@ -120,5 +126,6 @@
         private System.Windows.Forms.Button btnSnooze;
         private System.Windows.Forms.ComboBox listSnooze;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Timer timerReminder;
     }
 }

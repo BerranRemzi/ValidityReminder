@@ -15,7 +15,7 @@ namespace Validity_Reminder
 
         public Notification()
         {
-            InitializeComponent();           
+            InitializeComponent();
             XML.Reload();
 
             MainForm.EnableDoubleBuffer(dataGridViewExcel);
@@ -29,6 +29,19 @@ namespace Validity_Reminder
             Excel.SetCalculationColumn("Тахограф", "Тахограф Дни", ExcelDataTable.MathFunction.Subtract);
 
             LoadExcelFile();
+            HideColumns();
+        }
+        void HideColumns()
+        {
+            for (int col = 0; col < dataGridViewExcel.Columns.Count; col++)
+            {
+                dataGridViewExcel.Columns[col].Visible = false;
+            }
+            for (int labels = 0; labels < XML.NotificationFilter.Length; labels++)
+            {
+                dataGridViewExcel.Columns[XML.NotificationFilter[labels]].Visible = true;
+            }
+            //dataGridViewExcel.Columns[XML.NotificationFilter[1]].Visible = false;
         }
 
         void LoadExcelFile()
@@ -70,7 +83,7 @@ namespace Validity_Reminder
             int lastSnoozeIndex = XML.SnoozeValues.Length;
             inputBox.Items.Clear();
             for (int i = 0; i < lastSnoozeIndex; i++)
-            { 
+            {
                 inputBox.Items.Add(inputText[i]);
             }
         }
@@ -78,13 +91,13 @@ namespace Validity_Reminder
         {
             if (inputDays > 1)
             {
-                inputLabel.Text = "Expires in " + inputDays.ToString() +" days";
+                inputLabel.Text = "Expires in " + inputDays.ToString() + " days";
             }
             else
             {
                 inputLabel.Text = "Expires in " + inputDays.ToString() + " day";
             }
-            
+
         }
 
         private void Notification_Load(object sender, EventArgs e)
@@ -95,6 +108,13 @@ namespace Validity_Reminder
         private void ListSnooze_SelectedIndexChanged(object sender, EventArgs e)
         {
             XML.LastSnoozeIndex = listSnooze.SelectedIndex;
+        }
+
+        private void TimerReminder_Tick(object sender, EventArgs e)
+        {
+            //LoadExcelFile();
+            HideColumns();
+            timerReminder.Stop();
         }
     }
 }

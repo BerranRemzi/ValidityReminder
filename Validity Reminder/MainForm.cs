@@ -100,6 +100,7 @@ namespace Validity_Reminder
 
         public void FillFilterList()
         {
+            listColumns.Items.Clear();
             for (int i = 0; i < dataGridViewExcel.Columns.Count; i++)
             {
                 listColumns.Items.Add(dataGridViewExcel.Columns[i].HeaderText);

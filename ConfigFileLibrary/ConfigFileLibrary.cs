@@ -18,6 +18,7 @@ namespace ConfigFileLibrary
         string[] yellowSheets;
         string[] columnSource;
         string[] columnCalculation;
+        string[] notificationFilter;
 
         public void Reload()
         {
@@ -33,6 +34,7 @@ namespace ConfigFileLibrary
             columnSource = ReadStringArray("columnSource", ";");
             columnCalculation = ReadStringArray("columnCalculation", ";");
             yellowSheets = ReadStringArray("yellowSheets", ";");
+            notificationFilter = ReadStringArray("notificationFilter", ";");
         }
         public string ReadString(string key)
         {
@@ -215,6 +217,17 @@ namespace ConfigFileLibrary
                 columnCalculation = value;
             }
         }
+        public string[] NotificationFilter
+        {
+            get
+            {
+                return notificationFilter;
+            }
 
+            set
+            {
+                notificationFilter = value;
+            }
+        }
     }
 }

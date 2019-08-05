@@ -15,11 +15,49 @@ namespace Validity_Reminder
 
         public Notification()
         {
-            InitializeComponent();
+            InitializeComponent();           
+            XML.Reload();
+
+            MainForm.EnableDoubleBuffer(dataGridViewExcel);
 
             FillSnoozeValues(ref listSnooze, XML.SnoozeTexts);
             FillExpirationDays(ref lblExpiration, XML.ToExpiration);
             listSnooze.SelectedIndex = XML.LastSnoozeIndex;
+
+            Excel.SetCalculationColumn("Техн#Преглед", "ТП Дни", ExcelDataTable.MathFunction.Subtract);
+            Excel.SetCalculationColumn("ГО + ЗК", "ГО+ЗК Дни", ExcelDataTable.MathFunction.Subtract);
+            Excel.SetCalculationColumn("Тахограф", "Тахограф Дни", ExcelDataTable.MathFunction.Subtract);
+
+            LoadExcelFile();
+        }
+
+        void LoadExcelFile()
+        {
+            XML.Reload();
+            string fileName = XML.FileName;
+            Excel.SetFileName(fileName);
+            Excel.SetSheetNameColumn(true, XML.SheetCaption);
+
+            if (fileName != null)
+            {
+                dataGridViewExcel.DataSource = Excel.GetAllDataTables(fileName);
+                try
+                {
+                    //PaintRowsBySheetName();
+                    //PaintCellsInRed();
+
+                }
+                catch (Exception)
+                {
+                }
+
+                try
+                {
+                    //FillFilterList();
+                }
+                catch (Exception) { }
+
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)

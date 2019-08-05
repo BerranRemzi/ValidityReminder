@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.lblExpiration = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewExcel = new System.Windows.Forms.DataGridView();
             this.btnSnooze = new System.Windows.Forms.Button();
             this.listSnooze = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExcel)).BeginInit();
             this.SuspendLayout();
             // 
             // lblExpiration
@@ -46,19 +46,20 @@
             this.lblExpiration.TabIndex = 0;
             this.lblExpiration.Text = "Expire in XX days";
             // 
-            // dataGridView1
+            // dataGridViewExcel
             // 
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dataGridViewExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 41);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(665, 208);
-            this.dataGridView1.TabIndex = 1;
+            this.dataGridViewExcel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewExcel.Location = new System.Drawing.Point(12, 41);
+            this.dataGridViewExcel.Name = "dataGridViewExcel";
+            this.dataGridViewExcel.Size = new System.Drawing.Size(665, 208);
+            this.dataGridViewExcel.TabIndex = 1;
             // 
             // btnSnooze
             // 
+            this.btnSnooze.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSnooze.Location = new System.Drawing.Point(603, 12);
             this.btnSnooze.Name = "btnSnooze";
             this.btnSnooze.Size = new System.Drawing.Size(75, 23);
@@ -69,6 +70,7 @@
             // 
             // listSnooze
             // 
+            this.listSnooze.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.listSnooze.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.listSnooze.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.listSnooze.Location = new System.Drawing.Point(540, 14);
@@ -79,6 +81,7 @@
             // 
             // label2
             // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(476, 17);
             this.label2.Name = "label2";
@@ -95,7 +98,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.listSnooze);
             this.Controls.Add(this.btnSnooze);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dataGridViewExcel);
             this.Controls.Add(this.lblExpiration);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -104,7 +107,7 @@
             this.Text = "Notification";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.Notification_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExcel)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -113,7 +116,7 @@
         #endregion
 
         private System.Windows.Forms.Label lblExpiration;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridViewExcel;
         private System.Windows.Forms.Button btnSnooze;
         private System.Windows.Forms.ComboBox listSnooze;
         private System.Windows.Forms.Label label2;

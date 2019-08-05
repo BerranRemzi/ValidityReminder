@@ -34,7 +34,7 @@ namespace Validity_Reminder
 
 
         }
-        void EnableDoubleBuffer(DataGridView input)
+        internal static void EnableDoubleBuffer(DataGridView input)
         {
             typeof(DataGridView).InvokeMember(
                 "DoubleBuffered",
@@ -81,10 +81,6 @@ namespace Validity_Reminder
         {
             for (int i = 0; i < dataGridViewExcel.RowCount - 1; i++)
             {
-                /*if (int.Parse(dataGridViewExcel.Rows[i].Cells["ТП Дни"].Value.ToString()) < XML.ToExpiration)
-                {
-                    dataGridViewExcel.Rows[i].Cells["ТП Дни"].Style.BackColor = Color.LightGreen;
-                }*/
                 if (XML.ColumnSource.Length == XML.ColumnCalculation.Length)
                 {
                     for (int j = 0; j < XML.ColumnSource.Length; j++)
@@ -99,20 +95,6 @@ namespace Validity_Reminder
                         }
                     }
                 }
-
-                /*if (int.Parse(dataGridViewExcel.Rows[i].Cells["ГО+ЗК Дни"].Value.ToString()) < XML.ToExpiration)
-                {
-                    dataGridViewExcel.Rows[i].Cells["ГО+ЗК Дни"].Style.BackColor = Color.Pink;
-                }*/
-
-                /*
-                if (int.Parse(dataGridViewExcel.Rows[i].Cells["Тахограф Дни"].Value.ToString()) < XML.ToExpiration)
-                {
-                    dataGridViewExcel.Rows[i].Cells["Тахограф Дни"].Style.BackColor = Color.Orange;
-                }*/
-
-
-
             }
         }
 

@@ -11,29 +11,48 @@ namespace ConfigFileLibrary
         int toExpiration;
         string passwordHash;
         int lastSnoozeIndex;
-        int[] snoozeValues = Array.ConvertAll(ConfigurationManager.AppSettings["snoozeValues"].Split(';'), int.Parse);
-        string[] snoozeTexts = ConfigurationManager.AppSettings["snoozeTexts"].Split(new string[] { ";" }, StringSplitOptions.None);
-        int filterIndex = Convert.ToInt16(ConfigurationManager.AppSettings["filterIndex"]);
-        string sheetCaption = ConfigurationManager.AppSettings["sheetCaption"];
+        int[] snoozeValues;
+        string[] snoozeTexts;
+        int filterIndex;
+        string sheetCaption;
         string[] yellowSheets;
-        string[] columnSource = ConfigurationManager.AppSettings["columnSource"].Split(new string[] { ";" }, StringSplitOptions.None);
-        string[] columnCalculation = ConfigurationManager.AppSettings["columnCalculation"].Split(new string[] { ";" }, StringSplitOptions.None);
+        string[] columnSource;
+        string[] columnCalculation;
 
         public void Reload()
         {
-            fileName = ConfigurationManager.AppSettings["fileName"];
-            firstNotification = ConfigurationManager.AppSettings["firstNotification"];
-            toExpiration = Convert.ToInt16(ConfigurationManager.AppSettings["toExpiration"]);
-            passwordHash = ConfigurationManager.AppSettings["password"];
-            lastSnoozeIndex = Convert.ToInt16(ConfigurationManager.AppSettings["lastSnoozeIndex"]);
-            snoozeValues = Array.ConvertAll(ConfigurationManager.AppSettings["snoozeValues"].Split(';'), int.Parse);
-            snoozeTexts = ConfigurationManager.AppSettings["snoozeTexts"].Split(new string[] { ";" }, StringSplitOptions.None);
-            filterIndex = Convert.ToInt16(ConfigurationManager.AppSettings["filterIndex"]);
-            sheetCaption = ConfigurationManager.AppSettings["sheetCaption"];
-            columnSource = ConfigurationManager.AppSettings["columnSource"].Split(new string[] { ";" }, StringSplitOptions.None);
-            columnCalculation = ConfigurationManager.AppSettings["columnCalculation"].Split(new string[] { ";" }, StringSplitOptions.None);
-            yellowSheets = ConfigurationManager.AppSettings["yellowSheets"].Split(new string[] { ";" }, StringSplitOptions.None);
+            fileName = ReadString("fileName");
+            firstNotification = ReadString("firstNotification");
+            toExpiration = ReadInt("toExpiration");
+            passwordHash = ReadString("password");
+            lastSnoozeIndex = ReadInt("lastSnoozeIndex");
+            snoozeValues = ReadIntArray("snoozeValues", ";");
+            snoozeTexts = ReadStringArray("snoozeTexts", ";");
+            filterIndex = ReadInt("filterIndex");
+            sheetCaption = ReadString("sheetCaption");
+            columnSource = ReadStringArray("columnSource", ";");
+            columnCalculation = ReadStringArray("columnCalculation", ";");
+            yellowSheets = ReadStringArray("yellowSheets", ";");
         }
+        public string ReadString(string key)
+        {
+            return ConfigurationManager.AppSettings[key];
+        }
+
+        public string[] ReadStringArray(string key, string delimiter)
+        {
+            return ConfigurationManager.AppSettings[key].Split(new string[] { delimiter }, StringSplitOptions.None);
+        }
+
+        public int ReadInt(string key)
+        {
+            return Convert.ToInt32(ConfigurationManager.AppSettings[key]);
+        }
+        public int[] ReadIntArray(string key, string delimiter)
+        {
+            return Array.ConvertAll(ConfigurationManager.AppSettings[key].Split(';'), int.Parse);
+        }
+
         private static void SetSetting(string key, string value)
         {
             Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);

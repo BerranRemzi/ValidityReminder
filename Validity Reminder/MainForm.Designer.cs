@@ -112,6 +112,7 @@
             // 
             // timerReminder
             // 
+            this.timerReminder.Enabled = true;
             this.timerReminder.Tick += new System.EventHandler(this.timerReminder_Tick);
             // 
             // notifyIconReminder

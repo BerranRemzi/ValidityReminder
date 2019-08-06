@@ -19,6 +19,8 @@ namespace ConfigFileLibrary
         string[] columnSource;
         string[] columnCalculation;
         string[] notificationFilter;
+        int[] mainWindowSize;
+        int[] notificationWindowSize;
 
         public void Reload()
         {
@@ -35,6 +37,8 @@ namespace ConfigFileLibrary
             columnCalculation = ReadStringArray("columnCalculation", ";");
             yellowSheets = ReadStringArray("yellowSheets", ";");
             notificationFilter = ReadStringArray("notificationFilter", ";");
+            mainWindowSize = ReadIntArray("mainWindowSize", ";");
+            notificationWindowSize = ReadIntArray("notificationWindowSize", ";");
         }
         public string ReadString(string key)
         {
@@ -227,6 +231,30 @@ namespace ConfigFileLibrary
             set
             {
                 notificationFilter = value;
+            }
+        }
+        public int[] MainWindowSize
+        {
+            get
+            {
+                return mainWindowSize;
+            }
+
+            set
+            {
+                mainWindowSize = value;
+            }
+        }
+        public int[] NotificationWindowSize
+        {
+            get
+            {
+                return notificationWindowSize;
+            }
+
+            set
+            {
+                notificationWindowSize = value;
             }
         }
     }

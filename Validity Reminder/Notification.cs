@@ -5,6 +5,7 @@ using System.Configuration;
 using ConfigFileLibrary;
 using ExcelDataTableLibrary;
 using MD5HashLibrary;
+using System.Drawing;
 
 namespace Validity_Reminder
 {
@@ -43,10 +44,31 @@ namespace Validity_Reminder
             }
             //dataGridViewExcel.Columns[XML.NotificationFilter[1]].Visible = false;
         }
+        void HideRows()
+        {
+            int rowCount = dataGridViewExcel.Rows.Count - 1;
+            for (int row = 0; row < rowCount; row++)
+            {
+                bool visible = false;
+                for (int i = 0; i < Excel.calculationRowCount; i++)
+                {
+                    int result;
+                    if (int.TryParse(dataGridViewExcel.Rows[row].Cells[XML.ColumnCalculation[i]].Value.ToString(), out result))
+                    {
+                        if (result < XML.ToExpiration)
+                        {
+                            //dataGridViewExcel.Rows[i].Cells[XML.ColumnCalculation[j]].Style.BackColor = Color.Pink;
+                            visible = true;
+                        }
+                    }
+                }
+                dataGridViewExcel.CurrentCell = null;
+                dataGridViewExcel.Rows[row].Visible = visible;
+            }
+        }
 
         void LoadExcelFile()
         {
-            XML.Reload();
             string fileName = XML.FileName;
             Excel.SetFileName(fileName);
             Excel.SetSheetNameColumn(true, XML.SheetCaption);
@@ -54,25 +76,53 @@ namespace Validity_Reminder
             if (fileName != null)
             {
                 dataGridViewExcel.DataSource = Excel.GetAllDataTables(fileName);
-                try
-                {
-                    //PaintRowsBySheetName();
-                    //PaintCellsInRed();
 
-                }
-                catch (Exception)
-                {
-                }
-
-                try
-                {
-                    //FillFilterList();
-                }
-                catch (Exception) { }
-
+                PaintRowsBySheetName();
+                PaintCellsInRed();
             }
         }
+        void PaintCellsInRed()
+        {
+            try
+            {
+                for (int i = 0; i < dataGridViewExcel.RowCount - 1; i++)
+                {
+                    if (XML.ColumnSource.Length == XML.ColumnCalculation.Length)
+                    {
+                        for (int j = 0; j < XML.ColumnSource.Length; j++)
+                        {
+                            int result;
+                            if (int.TryParse(dataGridViewExcel.Rows[i].Cells[XML.ColumnCalculation[j]].Value.ToString(), out result))
+                            {
+                                if (result < XML.ToExpiration)
+                                {
+                                    dataGridViewExcel.Rows[i].Cells[XML.ColumnCalculation[j]].Style.BackColor = Color.Pink;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
 
+            }
+
+        }
+
+        public void PaintRowsBySheetName()
+        {
+            try
+            {
+                for (int i = 0; i < XML.YellowSheets.Length; i++)
+                {
+                    dataGridViewExcel = Excel.ChangeRowColorByColumn(dataGridViewExcel, XML.SheetCaption, XML.YellowSheets[i], Color.LightYellow);
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -113,8 +163,18 @@ namespace Validity_Reminder
         private void TimerReminder_Tick(object sender, EventArgs e)
         {
             //LoadExcelFile();
+            PaintRowsBySheetName();
+            PaintCellsInRed();
             HideColumns();
+            HideRows();
             timerReminder.Stop();
+        }
+
+        private void dataGridViewExcel_Sorted(object sender, EventArgs e)
+        {
+            PaintRowsBySheetName();
+            PaintCellsInRed();
+            HideRows();
         }
     }
 }

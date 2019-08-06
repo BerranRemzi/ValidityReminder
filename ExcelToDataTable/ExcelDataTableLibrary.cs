@@ -35,11 +35,11 @@ namespace ExcelDataTableLibrary
         }
 
         private readonly bool bCalculationColumn = false;
-        readonly string[,] calculationRowCaption = new string[10, 3];
+        public string[,] calculationRowCaption = new string[10, 3];
         readonly int[] calculationRowMathFunction = new int[10];
         bool calculationWithTodayDate = false;
 
-        int calculationRowCount = 0;
+        public int calculationRowCount = 0;
 
         public void SetCalculationColumn(string _columnName1, string _columnName2, string _columnNameResult, MathFunction _inputFunction)
         {

@@ -58,6 +58,7 @@
             this.dataGridViewExcel.Name = "dataGridViewExcel";
             this.dataGridViewExcel.Size = new System.Drawing.Size(768, 438);
             this.dataGridViewExcel.TabIndex = 1;
+            this.dataGridViewExcel.Sorted += new System.EventHandler(this.dataGridViewExcel_Sorted);
             // 
             // btnSnooze
             // 
@@ -93,6 +94,7 @@
             // 
             // timerReminder
             // 
+            this.timerReminder.Enabled = true;
             this.timerReminder.Tick += new System.EventHandler(this.TimerReminder_Tick);
             // 
             // Notification

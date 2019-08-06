@@ -26,10 +26,16 @@ namespace Validity_Reminder
             InitializeComponent();
             EnableDoubleBuffer(dataGridViewExcel);
             XML.Reload();
-            Excel.SetCalculationColumn("Техн#Преглед", "ТП Дни", ExcelDataTable.MathFunction.Subtract);
-            Excel.SetCalculationColumn("ГО + ЗК", "ГО+ЗК Дни", ExcelDataTable.MathFunction.Subtract);
-            Excel.SetCalculationColumn("Тахограф", "Тахограф Дни", ExcelDataTable.MathFunction.Subtract);
 
+            for (int i = 0; i < XML.ColumnSource.Length; i++)
+            {
+                Excel.SetCalculationColumn(XML.ColumnSource[i], XML.ColumnCalculation[i], ExcelDataTable.MathFunction.Subtract);
+            }
+            foreach( string columnSource in XML.ColumnSource)
+            {
+
+                Excel.SetCalculationColumn(columnSource, XML.ColumnCalculation[i], ExcelDataTable.MathFunction.Subtract);
+            }
             LoadExcelFile();
 
 
@@ -58,65 +64,70 @@ namespace Validity_Reminder
             if (fileName != null)
             {
                 dataGridViewExcel.DataSource = Excel.GetAllDataTables(fileName);
-                try
-                {
-                    PaintRowsBySheetName();
-                    PaintCellsInRed();
-
-                }
-                catch (Exception)
-                {
-                }
-
-                try
-                {
-                    FillFilterList();
-                }
-                catch (Exception) { }
-
+                PaintRowsBySheetName();
+                PaintCellsInRed();
+                FillFilterList();
             }
         }
 
         void PaintCellsInRed()
         {
-            for (int i = 0; i < dataGridViewExcel.RowCount - 1; i++)
+            try
             {
-                if (XML.ColumnSource.Length == XML.ColumnCalculation.Length)
+                for (int i = 0; i < dataGridViewExcel.RowCount - 1; i++)
                 {
-                    for (int j = 0; j < XML.ColumnSource.Length; j++)
+                    if (XML.ColumnSource.Length == XML.ColumnCalculation.Length)
                     {
-                        int result;
-                        if (int.TryParse(dataGridViewExcel.Rows[i].Cells[XML.ColumnCalculation[j]].Value.ToString(), out result))
+                        for (int j = 0; j < XML.ColumnSource.Length; j++)
                         {
-                            if (result < XML.ToExpiration)
+                            int result;
+                            if (int.TryParse(dataGridViewExcel.Rows[i].Cells[XML.ColumnCalculation[j]].Value.ToString(), out result))
                             {
-                                dataGridViewExcel.Rows[i].Cells[XML.ColumnCalculation[j]].Style.BackColor = Color.Pink;
+                                if (result < XML.ToExpiration)
+                                {
+                                    dataGridViewExcel.Rows[i].Cells[XML.ColumnCalculation[j]].Style.BackColor = Color.Pink;
+                                }
                             }
                         }
                     }
                 }
             }
+            catch (Exception)
+            {
+
+            }
+
         }
 
         public void FillFilterList()
         {
-            listColumns.Items.Clear();
-            for (int i = 0; i < dataGridViewExcel.Columns.Count; i++)
+            try
             {
-                listColumns.Items.Add(dataGridViewExcel.Columns[i].HeaderText);
+                listColumns.Items.Clear();
+                for (int i = 0; i < dataGridViewExcel.Columns.Count; i++)
+                {
+                    listColumns.Items.Add(dataGridViewExcel.Columns[i].HeaderText);
+                }
+                if (listColumns.Items.Count > XML.FilterIndex)
+                {
+                    listColumns.SelectedIndex = XML.FilterIndex;
+                }
             }
-            if (listColumns.Items.Count > XML.FilterIndex)
-            {
-                listColumns.SelectedIndex = XML.FilterIndex;
-            }
+            catch (Exception) { }
+
         }
 
         public void PaintRowsBySheetName()
         {
-            for (int i = 0; i < XML.YellowSheets.Length; i++)
+            try
             {
-                dataGridViewExcel = Excel.ChangeRowColorByColumn(dataGridViewExcel, XML.SheetCaption, XML.YellowSheets[i], Color.LightYellow);
+                for (int i = 0; i < XML.YellowSheets.Length; i++)
+                {
+                    dataGridViewExcel = Excel.ChangeRowColorByColumn(dataGridViewExcel, XML.SheetCaption, XML.YellowSheets[i], Color.LightYellow);
+                }
             }
+            catch (Exception) { }
+
         }
         private void BtnSettings_Click(object sender, EventArgs e)
         {

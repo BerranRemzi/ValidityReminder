@@ -113,6 +113,7 @@
             // timerReminder
             // 
             this.timerReminder.Enabled = true;
+            this.timerReminder.Interval = 1000;
             this.timerReminder.Tick += new System.EventHandler(this.timerReminder_Tick);
             // 
             // notifyIconReminder

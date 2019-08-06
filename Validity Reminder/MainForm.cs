@@ -16,6 +16,8 @@ namespace Validity_Reminder
     public partial class MainForm : Form
     {
 
+        int timeoutCounter = 0;
+        Notification NotificationForm = new Notification();
 
         readonly ExcelDataTable Excel = new ExcelDataTable();
         ConfigFile XML = new ConfigFile();
@@ -31,13 +33,12 @@ namespace Validity_Reminder
             {
                 Excel.SetCalculationColumn(XML.ColumnSource[i], XML.ColumnCalculation[i], ExcelDataTable.MathFunction.Subtract);
             }
-            foreach( string columnSource in XML.ColumnSource)
-            {
 
-                Excel.SetCalculationColumn(columnSource, XML.ColumnCalculation[i], ExcelDataTable.MathFunction.Subtract);
-            }
             LoadExcelFile();
 
+            //timerReminder.Interval = (int)TimeSpan.FromMinutes(1).TotalMilliseconds;
+            timerReminder.Interval = 10000;
+            timeoutCounter = XML.SnoozeValues[XML.LastSnoozeIndex];
 
         }
         internal static void EnableDoubleBuffer(DataGridView input)
@@ -144,7 +145,6 @@ namespace Validity_Reminder
 
         private void BtnReminder_Click(object sender, EventArgs e)
         {
-            Notification NotificationForm = new Notification();
             NotificationForm.ShowDialog();
         }
 
@@ -227,9 +227,18 @@ namespace Validity_Reminder
 
         private void timerReminder_Tick(object sender, EventArgs e)
         {
-
+            if (timeoutCounter > 0)
+            {
+                timeoutCounter--;
+            }
+            if (timeoutCounter == 0 && (NotificationForm.Visible == false))
+            {
+                //NotificationForm = new Notification();
+                NotificationForm.ShowDialog();
+                XML.Reload();
+                timeoutCounter = XML.SnoozeValues[XML.LastSnoozeIndex];
+            }
         }
-
         private void timerFirstStart_Tick(object sender, EventArgs e)
         {
             LoadExcelFile();

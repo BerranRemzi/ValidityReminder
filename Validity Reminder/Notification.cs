@@ -152,7 +152,7 @@ namespace Validity_Reminder
 
         private void Notification_Load(object sender, EventArgs e)
         {
-
+            timerReminder.Start();
         }
 
         private void ListSnooze_SelectedIndexChanged(object sender, EventArgs e)

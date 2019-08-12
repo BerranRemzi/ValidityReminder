@@ -34,15 +34,20 @@ namespace Validity_Reminder
         }
         void HideColumns()
         {
-            for (int col = 0; col < dataGridViewExcel.Columns.Count; col++)
+            try
             {
-                dataGridViewExcel.Columns[col].Visible = false;
+                for (int col = 0; col < dataGridViewExcel.Columns.Count; col++)
+                {
+                    dataGridViewExcel.Columns[col].Visible = false;
+                }
+                for (int labels = 0; labels < XML.NotificationFilter.Length; labels++)
+                {
+                    dataGridViewExcel.Columns[XML.NotificationFilter[labels]].Visible = true;
+                }
             }
-            for (int labels = 0; labels < XML.NotificationFilter.Length; labels++)
-            {
-                dataGridViewExcel.Columns[XML.NotificationFilter[labels]].Visible = true;
+            catch (Exception) {
+
             }
-            //dataGridViewExcel.Columns[XML.NotificationFilter[1]].Visible = false;
         }
         void HideRows()
         {

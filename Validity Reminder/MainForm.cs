@@ -9,13 +9,16 @@ using ConfigFileLibrary;
 using ExcelDataTableLibrary;
 using MD5HashLibrary;
 using System.Threading;
+using System.Globalization;
 
 namespace Validity_Reminder
 {
     public partial class MainForm : Form
     {
 
-        int timeoutCounter = 0;
+        int timeoutMinutes = 0;
+        DateTime nextTime = DateTime.Now;
+        DateTime firstTime;
         readonly Notification NotificationForm = new Notification();
 
         readonly ExcelDataTable Excel = new ExcelDataTable();
@@ -40,10 +43,12 @@ namespace Validity_Reminder
 
             LoadExcelFile();
 
-            //timerReminder.Interval = (int)TimeSpan.FromMinutes(1).TotalMilliseconds;
-            timerReminder.Interval = 10000;
-            timeoutCounter = XML.SnoozeValues[XML.LastSnoozeIndex];
+            timerReminder.Interval = 1000;
+            timeoutMinutes = XML.SnoozeValues[XML.LastSnoozeIndex];
 
+            firstTime = DateTime.Parse(XML.FirstNotification, CultureInfo.InvariantCulture);
+
+            LoadNextNotificationTime();
         }
         internal static void EnableDoubleBuffer(DataGridView input)
         {
@@ -242,18 +247,36 @@ namespace Validity_Reminder
 
         private void TimerReminder_Tick(object sender, EventArgs e)
         {
-            if (timeoutCounter > 0)
+            DateTime currentTime = DateTime.Now;
+
+            label1.Text = nextTime.ToString();
+
+            if (DateTime.Compare(currentTime, nextTime) > 0)
             {
-                timeoutCounter--;
-            }
-            if (timeoutCounter == 0 && (NotificationForm.Visible == false))
-            {
-                //NotificationForm = new Notification();
-                NotificationForm.ShowDialog();
-                XML.Reload();
-                timeoutCounter = XML.SnoozeValues[XML.LastSnoozeIndex];
+                if (NotificationForm.Visible == false)
+                {
+                    NotificationForm.ShowDialog();
+                    XML.Reload();
+                    LoadNextNotificationTime();
+                }
             }
         }
+
+        void LoadNextNotificationTime()
+        {
+            timeoutMinutes = XML.SnoozeValues[XML.LastSnoozeIndex];
+
+            if (DateTime.Compare(firstTime, nextTime) < 0)
+            {
+                nextTime = firstTime;
+            }
+            else
+            {
+                nextTime = DateTime.Now.AddMinutes(timeoutMinutes);
+            }
+
+        }
+
         private void TimerFirstStart_Tick(object sender, EventArgs e)
         {
             LoadExcelFile();
@@ -262,6 +285,7 @@ namespace Validity_Reminder
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            LoadNextNotificationTime();
 
             const string appName = "Validity Reminder";
             //bool createdNew;

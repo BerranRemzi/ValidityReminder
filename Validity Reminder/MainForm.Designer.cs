@@ -44,6 +44,7 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timerFirstStart = new System.Windows.Forms.Timer(this.components);
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExcel)).BeginInit();
             this.contextMenuReminder.SuspendLayout();
             this.SuspendLayout();
@@ -166,11 +167,21 @@
             this.timerFirstStart.Enabled = true;
             this.timerFirstStart.Tick += new System.EventHandler(this.TimerFirstStart_Tick);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(422, 22);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "label1";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(727, 441);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.dataGridViewExcel);
             this.Controls.Add(this.listColumns);
             this.Controls.Add(this.txtFilter);
@@ -206,6 +217,7 @@
         private System.Windows.Forms.ToolStripMenuItem exitStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reminderToolStripMenuItem;
         private System.Windows.Forms.Timer timerFirstStart;
+        private System.Windows.Forms.Label label1;
     }
 }
 

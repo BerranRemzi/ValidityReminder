@@ -53,8 +53,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>
-    </StartupObject>
+    <StartupObject>Validity_Reminder.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

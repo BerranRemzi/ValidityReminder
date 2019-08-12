@@ -114,7 +114,7 @@
             // 
             this.timerReminder.Enabled = true;
             this.timerReminder.Interval = 1000;
-            this.timerReminder.Tick += new System.EventHandler(this.timerReminder_Tick);
+            this.timerReminder.Tick += new System.EventHandler(this.TimerReminder_Tick);
             // 
             // notifyIconReminder
             // 
@@ -164,7 +164,7 @@
             // timerFirstStart
             // 
             this.timerFirstStart.Enabled = true;
-            this.timerFirstStart.Tick += new System.EventHandler(this.timerFirstStart_Tick);
+            this.timerFirstStart.Tick += new System.EventHandler(this.TimerFirstStart_Tick);
             // 
             // MainForm
             // 
@@ -182,6 +182,7 @@
             this.Name = "MainForm";
             this.Text = "Validity Reminder";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExcel)).EndInit();
             this.contextMenuReminder.ResumeLayout(false);
             this.ResumeLayout(false);

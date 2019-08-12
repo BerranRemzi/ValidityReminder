@@ -8,8 +8,7 @@ using System.Reflection;
 using ConfigFileLibrary;
 using ExcelDataTableLibrary;
 using MD5HashLibrary;
-
-
+using System.Threading;
 
 namespace Validity_Reminder
 {
@@ -17,11 +16,16 @@ namespace Validity_Reminder
     {
 
         int timeoutCounter = 0;
-        Notification NotificationForm = new Notification();
+        readonly Notification NotificationForm = new Notification();
 
         readonly ExcelDataTable Excel = new ExcelDataTable();
-        ConfigFile XML = new ConfigFile();
+        readonly ConfigFile XML = new ConfigFile();
         string fileName;
+
+        private static Mutex _mutex = null;
+        bool createdNew;
+
+        public static Mutex Mutex { get => _mutex; set => _mutex = value; }
 
         public MainForm()
         {
@@ -81,8 +85,7 @@ namespace Validity_Reminder
                     {
                         for (int j = 0; j < XML.ColumnSource.Length; j++)
                         {
-                            int result;
-                            if (int.TryParse(dataGridViewExcel.Rows[i].Cells[XML.ColumnCalculation[j]].Value.ToString(), out result))
+                            if (int.TryParse(dataGridViewExcel.Rows[i].Cells[XML.ColumnCalculation[j]].Value.ToString(), out int result))
                             {
                                 if (result < XML.ToExpiration)
                                 {
@@ -132,8 +135,10 @@ namespace Validity_Reminder
         }
         private void BtnSettings_Click(object sender, EventArgs e)
         {
-            Settings SettingsForm = new Settings();
-            SettingsForm.ShowDialog();
+            using (Settings SettingsForm = new Settings())
+            {
+                SettingsForm.ShowDialog();
+            }
             timerFirstStart.Start();
         }
 
@@ -150,6 +155,12 @@ namespace Validity_Reminder
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (!createdNew)
+            {
+                Application.Exit();
+                return;
+            }
+
             e.Cancel = true;
             this.Hide();
         }
@@ -168,12 +179,16 @@ namespace Validity_Reminder
                     this.Show();
                     break;
                 case "Settings":
-                    Settings SettingsForm = new Settings();
-                    SettingsForm.ShowDialog();
+                    using (Settings SettingsForm = new Settings())
+                    {
+                        SettingsForm.ShowDialog();
+                    }
                     break;
                 case "Reminder":
-                    Notification NotificationForm = new Notification();
-                    NotificationForm.ShowDialog();
+                    using (Notification NotificationForm = new Notification())
+                    {
+                        NotificationForm.ShowDialog();
+                    }
                     break;
                 case "Exit":
                     if (CheckPassword() == true)
@@ -225,7 +240,7 @@ namespace Validity_Reminder
             }
         }
 
-        private void timerReminder_Tick(object sender, EventArgs e)
+        private void TimerReminder_Tick(object sender, EventArgs e)
         {
             if (timeoutCounter > 0)
             {
@@ -239,10 +254,28 @@ namespace Validity_Reminder
                 timeoutCounter = XML.SnoozeValues[XML.LastSnoozeIndex];
             }
         }
-        private void timerFirstStart_Tick(object sender, EventArgs e)
+        private void TimerFirstStart_Tick(object sender, EventArgs e)
         {
             LoadExcelFile();
             timerFirstStart.Stop();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+            const string appName = "Validity Reminder";
+            //bool createdNew;
+            Mutex = new Mutex(true, appName, out createdNew);
+
+            if (!createdNew)
+            {
+                Application.Exit();
+                return;
+            }
+            else
+            {
+                Show();
+            }
         }
     }
 }

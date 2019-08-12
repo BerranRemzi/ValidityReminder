@@ -31,15 +31,15 @@ namespace Validity_Reminder
             this.Close();
         }
 
-        private void txtPassword_KeyPress(object sender, KeyPressEventArgs e)
+        private void TxtPassword_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)13)
             {
-                btnExit_Click(sender, null);
+                BtnExit_Click(sender, null);
             }
         }
 
-        private void btnExit_Click(object sender, EventArgs e)
+        private void BtnExit_Click(object sender, EventArgs e)
         {
             var md5 = new MD5Hash();
             hash = XML.PasswordHash;

@@ -27,9 +27,7 @@ namespace Validity_Reminder
 
         private static Mutex _mutex = null;
         bool createdNew;
-
-        public static Mutex Mutex { get => _mutex; set => _mutex = value; }
-
+      
         public MainForm()
         {
             InitializeComponent();
@@ -90,7 +88,8 @@ namespace Validity_Reminder
                     {
                         for (int j = 0; j < XML.ColumnSource.Length; j++)
                         {
-                            if (int.TryParse(dataGridViewExcel.Rows[i].Cells[XML.ColumnCalculation[j]].Value.ToString(), out int result))
+                            int result;
+                            if (int.TryParse(dataGridViewExcel.Rows[i].Cells[XML.ColumnCalculation[j]].Value.ToString(), out result))
                             {
                                 if (result < XML.ToExpiration)
                                 {
@@ -249,9 +248,7 @@ namespace Validity_Reminder
         {
             DateTime currentTime = DateTime.Now;
 
-            label1.Text = nextTime.ToString();
-
-            if (DateTime.Compare(currentTime, nextTime) > 0)
+            if (DateTime.Compare(currentTime, firstTime) >= 0 && DateTime.Compare(currentTime, nextTime) >= 0)
             {
                 if (NotificationForm.Visible == false)
                 {
@@ -264,13 +261,11 @@ namespace Validity_Reminder
 
         void LoadNextNotificationTime()
         {
+            DateTime currentTime = DateTime.Now;
+
             timeoutMinutes = XML.SnoozeValues[XML.LastSnoozeIndex];
 
-            if (DateTime.Compare(firstTime, nextTime) < 0)
-            {
-                nextTime = firstTime;
-            }
-            else
+            if (DateTime.Compare(currentTime, nextTime) > 0)
             {
                 nextTime = DateTime.Now.AddMinutes(timeoutMinutes);
             }
@@ -289,7 +284,7 @@ namespace Validity_Reminder
 
             const string appName = "Validity Reminder";
             //bool createdNew;
-            Mutex = new Mutex(true, appName, out createdNew);
+            _mutex = new Mutex(true, appName, out createdNew);
 
             if (!createdNew)
             {

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
@@ -7,7 +6,6 @@ using System.Reflection;
 
 using ConfigFileLibrary;
 using ExcelDataTableLibrary;
-using MD5HashLibrary;
 using System.Threading;
 using System.Globalization;
 

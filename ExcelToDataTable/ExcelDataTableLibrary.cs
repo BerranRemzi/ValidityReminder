@@ -246,7 +246,7 @@ namespace ExcelDataTableLibrary
                             switch (calculationRowMathFunction[i])
                             {
                                 case (int)MathFunction.Subtract:
-                                    dr[calculationRowCaption[i, 2]] = (int)(inputTime[1] - inputTime[0]).TotalDays;
+                                    dr[calculationRowCaption[i, 2]] = (int)(inputTime[0] - inputTime[1]).TotalDays;
                                     break;
                                 default: break;
                             }

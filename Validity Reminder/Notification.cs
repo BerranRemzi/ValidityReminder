@@ -6,6 +6,10 @@ using ConfigFileLibrary;
 using ExcelDataTableLibrary;
 using MD5HashLibrary;
 using System.Drawing;
+using System.IO;
+using System.Reflection;
+using System.Data;
+using DGV2Printer;
 
 namespace Validity_Reminder
 {
@@ -45,14 +49,15 @@ namespace Validity_Reminder
                     dataGridViewExcel.Columns[XML.NotificationFilter[labels]].Visible = true;
                 }
             }
-            catch (Exception) {
+            catch (Exception)
+            {
 
             }
         }
         void HideRows()
         {
             int rowCount = dataGridViewExcel.Rows.Count - 1;
-            for (int row = 0; row < rowCount; row++)
+            for (int row = 0; row < dataGridViewExcel.Rows.Count - 1; row++)
             {
                 bool visible = false;
                 for (int i = 0; i < Excel.calculationRowCount; i++)
@@ -62,16 +67,38 @@ namespace Validity_Reminder
                     {
                         if (result < XML.ToExpiration)
                         {
-                            //dataGridViewExcel.Rows[i].Cells[XML.ColumnCalculation[j]].Style.BackColor = Color.Pink;
                             visible = true;
                         }
                     }
                 }
-                dataGridViewExcel.CurrentCell = null;
-                dataGridViewExcel.Rows[row].Visible = visible;
+                if (visible == false)
+                {
+                    dataGridViewExcel.Rows.Remove(dataGridViewExcel.Rows[row]);
+                }
+                else
+                {
+
+                }
+                //dataGridViewExcel.CurrentCell = null;
+                //dataGridViewExcel.Rows[row].Visible = visible;
             }
         }
 
+        void HideByFilter()
+        {
+            int rowCount = 0;
+            for (int row = 0; row < dataGridViewExcel.Rows.Count - 1; row++)
+            {
+                if (Equals(dataGridViewExcel.Rows[row].Cells[XML.IgnoreCheckColumn].Value.ToString(), XML.IgnoreText) == true)
+                {
+                    dataGridViewExcel.Rows.Remove(dataGridViewExcel.Rows[row]);
+                    rowCount--;
+                }
+
+                //dataGridViewExcel.CurrentCell = null;
+                //dataGridViewExcel.Rows[row].Visible = isVisible;
+            }
+        }
         void LoadExcelFile()
         {
             string fileName = XML.FileName;
@@ -128,7 +155,7 @@ namespace Validity_Reminder
             {
             }
         }
-        private void button2_Click(object sender, EventArgs e)
+        private void Button2_Click(object sender, EventArgs e)
         {
             this.Close();
         }
@@ -172,14 +199,25 @@ namespace Validity_Reminder
             PaintCellsInRed();
             HideColumns();
             HideRows();
+            HideByFilter();
             timerReminder.Stop();
         }
 
-        private void dataGridViewExcel_Sorted(object sender, EventArgs e)
+        private void DataGridViewExcel_Sorted(object sender, EventArgs e)
         {
             PaintRowsBySheetName();
             PaintCellsInRed();
             HideRows();
+            //HideByFilter();
         }
+
+        private void BtnPrint_Click(object sender, EventArgs e)
+        {
+            PrintDataGridView pr = new PrintDataGridView(dataGridViewExcel);
+            pr.ReportHeader = DateTime.Today.ToString();
+            pr.ReportFooter = XML.FileName;
+            pr.Print();
+        }
+
     }
 }

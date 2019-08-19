@@ -29,12 +29,17 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Notification));
             this.lblExpiration = new System.Windows.Forms.Label();
             this.dataGridViewExcel = new System.Windows.Forms.DataGridView();
             this.btnSnooze = new System.Windows.Forms.Button();
             this.listSnooze = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.timerReminder = new System.Windows.Forms.Timer(this.components);
+            this.btnPrint = new System.Windows.Forms.Button();
+            this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
+            this.printDialog1 = new System.Windows.Forms.PrintDialog();
+            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExcel)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,7 +63,7 @@
             this.dataGridViewExcel.Name = "dataGridViewExcel";
             this.dataGridViewExcel.Size = new System.Drawing.Size(768, 438);
             this.dataGridViewExcel.TabIndex = 1;
-            this.dataGridViewExcel.Sorted += new System.EventHandler(this.dataGridViewExcel_Sorted);
+            this.dataGridViewExcel.Sorted += new System.EventHandler(this.DataGridViewExcel_Sorted);
             // 
             // btnSnooze
             // 
@@ -69,7 +74,7 @@
             this.btnSnooze.TabIndex = 3;
             this.btnSnooze.Text = "Snooze";
             this.btnSnooze.UseVisualStyleBackColor = true;
-            this.btnSnooze.Click += new System.EventHandler(this.button2_Click);
+            this.btnSnooze.Click += new System.EventHandler(this.Button2_Click);
             // 
             // listSnooze
             // 
@@ -97,23 +102,46 @@
             this.timerReminder.Enabled = true;
             this.timerReminder.Tick += new System.EventHandler(this.TimerReminder_Tick);
             // 
+            // btnPrint
+            // 
+            this.btnPrint.Location = new System.Drawing.Point(498, 12);
+            this.btnPrint.Name = "btnPrint";
+            this.btnPrint.Size = new System.Drawing.Size(75, 23);
+            this.btnPrint.TabIndex = 6;
+            this.btnPrint.Text = "Print";
+            this.btnPrint.UseVisualStyleBackColor = true;
+            this.btnPrint.Click += new System.EventHandler(this.BtnPrint_Click);
+            // 
+            // printPreviewDialog1
+            // 
+            this.printPreviewDialog1.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog1.ClientSize = new System.Drawing.Size(400, 300);
+            this.printPreviewDialog1.Enabled = true;
+            this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
+            this.printPreviewDialog1.Name = "printPreviewDialog1";
+            this.printPreviewDialog1.Visible = false;
+            // 
+            // printDialog1
+            // 
+            this.printDialog1.UseEXDialog = true;
+            // 
             // Notification
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.ClientSize = new System.Drawing.Size(793, 491);
+            this.Controls.Add(this.btnPrint);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.listSnooze);
             this.Controls.Add(this.btnSnooze);
             this.Controls.Add(this.dataGridViewExcel);
             this.Controls.Add(this.lblExpiration);
-            this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Notification";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Notification";
-            this.TopMost = true;
             this.Load += new System.EventHandler(this.Notification_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExcel)).EndInit();
             this.ResumeLayout(false);
@@ -129,5 +157,9 @@
         private System.Windows.Forms.ComboBox listSnooze;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Timer timerReminder;
+        private System.Windows.Forms.Button btnPrint;
+        private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
+        private System.Windows.Forms.PrintDialog printDialog1;
+        private System.Drawing.Printing.PrintDocument printDocument1;
     }
 }

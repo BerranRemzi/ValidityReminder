@@ -68,7 +68,8 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Validity_Reminder.Program</StartupObject>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>true</SignManifests>
@@ -88,6 +89,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Printing" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -161,7 +163,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="excel_icon.ico" />
-    <None Include="PrintIcon.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConfigFileLibrary\ConfigFileLibrary.csproj">

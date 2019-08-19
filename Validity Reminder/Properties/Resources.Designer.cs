@@ -59,15 +59,5 @@ namespace Validity_Reminder.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap PrintIcon {
-            get {
-                object obj = ResourceManager.GetObject("PrintIcon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
     }
 }

@@ -89,10 +89,13 @@ namespace Validity_Reminder
             int rowCount = 0;
             for (int row = 0; row < dataGridViewExcel.Rows.Count - 1; row++)
             {
-                if (Equals(dataGridViewExcel.Rows[row].Cells[XML.IgnoreCheckColumn].Value.ToString(), XML.IgnoreText) == true)
+                for (int i = 0; i < XML.IgnoreText.Length; i++)
                 {
-                    dataGridViewExcel.Rows.Remove(dataGridViewExcel.Rows[row]);
-                    rowCount--;
+                    if (Equals(dataGridViewExcel.Rows[row].Cells[XML.IgnoreCheckColumn].Value.ToString(), XML.IgnoreText[i]) == true)
+                    {
+                        dataGridViewExcel.Rows.Remove(dataGridViewExcel.Rows[row]);
+                        rowCount--;
+                    }
                 }
 
                 //dataGridViewExcel.CurrentCell = null;

@@ -22,7 +22,7 @@ namespace ConfigFileLibrary
         int[] mainWindowSize;
         int[] notificationWindowSize;
         string ignoreCheckColumn;
-        string ignoreText;
+        string[] ignoreText;
 
         public void Reload()
         {
@@ -43,7 +43,7 @@ namespace ConfigFileLibrary
             notificationWindowSize = ReadIntArray("notificationWindowSize", ";");
 
             ignoreCheckColumn = ReadString("ignoreCheckColumn");
-            ignoreText = ReadString("ignoreText");
+            ignoreText = ReadStringArray("ignoreText",";");
         }
         public string ReadString(string key)
         {
@@ -264,7 +264,7 @@ namespace ConfigFileLibrary
         }
 
 
-        public string IgnoreText
+        public string[] IgnoreText
         {
             get
             {

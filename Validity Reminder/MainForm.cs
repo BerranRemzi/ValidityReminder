@@ -8,6 +8,7 @@ using ConfigFileLibrary;
 using ExcelDataTableLibrary;
 using System.Threading;
 using System.Globalization;
+using System.IO;
 
 namespace Validity_Reminder
 {
@@ -25,7 +26,7 @@ namespace Validity_Reminder
 
         private static Mutex _mutex = null;
         bool createdNew;
-      
+
         public MainForm()
         {
             InitializeComponent();
@@ -279,7 +280,7 @@ namespace Validity_Reminder
         private void MainForm_Load(object sender, EventArgs e)
         {
             LoadNextNotificationTime();
-
+            
             const string appName = "Validity Reminder";
             //bool createdNew;
             _mutex = new Mutex(true, appName, out createdNew);
@@ -292,7 +293,25 @@ namespace Validity_Reminder
             else
             {
                 Show();
+                VersionManager();
             }
+        }
+        private void VersionManager()
+        {
+            Text = "Validity Reminder " + GetLinkerTimestampUtc(Assembly.GetExecutingAssembly()).ToString();
+        }
+
+        public static DateTime GetLinkerTimestampUtc(Assembly assembly)
+        {
+            var location = assembly.Location;
+            
+            return GetLinkerTimestampUtc(location);
+        }
+
+        public static DateTime GetLinkerTimestampUtc(string filePath)
+        {
+            DateTime creation = File.GetLastWriteTime(filePath);
+            return creation;
         }
     }
 }

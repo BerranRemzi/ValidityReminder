@@ -86,20 +86,15 @@ namespace Validity_Reminder
 
         void HideByFilter()
         {
-            int rowCount = 0;
             for (int row = 0; row < dataGridViewExcel.Rows.Count - 1; row++)
             {
                 for (int i = 0; i < XML.IgnoreText.Length; i++)
-                {
-                    if (Equals(dataGridViewExcel.Rows[row].Cells[XML.IgnoreCheckColumn].Value.ToString(), XML.IgnoreText[i]) == true)
+                {                  
+                    if (dataGridViewExcel.Rows[row].Cells[XML.IgnoreCheckColumn].Value.ToString().Contains(XML.IgnoreText[i]) == true)
                     {
                         dataGridViewExcel.Rows.Remove(dataGridViewExcel.Rows[row]);
-                        rowCount--;
                     }
                 }
-
-                //dataGridViewExcel.CurrentCell = null;
-                //dataGridViewExcel.Rows[row].Visible = isVisible;
             }
         }
         void LoadExcelFile()
